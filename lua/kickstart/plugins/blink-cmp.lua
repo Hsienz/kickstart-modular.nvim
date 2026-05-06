@@ -4,31 +4,38 @@ return {
   { -- Autocompletion
     'saghen/blink.cmp',
     event = 'VimEnter',
-    version = '1.*',
+    build = function()
+      -- build the fuzzy matcher, wait up to 60 seconds
+      -- you can use `gb` in `:Lazy` to rebuild the plugin as needed
+      require('blink.cmp').build():wait(60000)
+    end,
     dependencies = {
       -- Snippet Engine
       {
-        'L3MON4D3/LuaSnip',
-        version = '2.*',
-        build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then return end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+        'saghen/blink.lib',
+        'onsails/lspkind.nvim',
+        'nvim-tree/nvim-web-devicons',
+        {
+          'L3MON4D3/LuaSnip',
+          version = '2.*',
+          build = (function()
+            -- Build Step is needed for regex support in snippets.
+            -- This step is not supported in many windows environments.
+            -- Remove the below condition to re-enable on windows.
+            if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then return end
+            return 'make install_jsregexp'
+          end)(),
+          dependencies = {
+            -- `friendly-snippets` contains a variety of premade snippets.
+            --    See the README about individual language/framework/plugin snippets:
+            --    https://github.com/rafamadriz/friendly-snippets
+            {
+              'rafamadriz/friendly-snippets',
+              config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+            },
+          },
+          opts = {},
         },
-        opts = {},
       },
     },
     ---@module 'blink.cmp'
@@ -56,7 +63,9 @@ return {
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
+        preset = 'enter',
+        ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -71,11 +80,68 @@ return {
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        -- documentation = { auto_show = false, auto_show_delay_ms = 500 },
+
+        list = {
+          selection = {
+            preselect = true,
+          },
+        },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 200,
+          window = {
+            border = 'rounded',
+          },
+        },
+        ghost_text = {
+          enabled = true,
+        },
+        accept = {
+          -- experimental auto-brackets support
+          auto_brackets = {
+            enabled = true,
+          },
+        },
+        menu = {
+          border = 'rounded',
+          auto_show_delay_ms = 0,
+          draw = {
+            treesitter = { 'lsp' },
+            columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind' } },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  local icon = ctx.kind_icon
+                  if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                    local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                    if dev_icon then icon = dev_icon end
+                  else
+                    icon = require('lspkind').symbol_map[ctx.kind] or ''
+                  end
+
+                  return icon .. ctx.icon_gap
+                end,
+
+                -- Optionally, use the highlight groups from nvim-web-devicons
+                -- You can also add the same function for `kind.highlight` if you want to
+                -- keep the highlight groups in sync with the icons.
+                highlight = function(ctx)
+                  local hl = ctx.kind_hl
+                  if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                    local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
+                    if dev_icon then hl = dev_hl end
+                  end
+                  return hl
+                end,
+              },
+            },
+          },
+        },
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets' },
+        default = { 'snippets', 'lsp', 'path', 'buffer' },
       },
 
       snippets = { preset = 'luasnip' },
@@ -87,10 +153,25 @@ return {
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'rust' },
 
       -- Shows a signature help window while you type arguments for a function
-      signature = { enabled = true },
+      signature = { enabled = true, window = {
+        border = 'rounded',
+      } },
+
+      cmdline = {
+        enabled = true,
+        keymap = { preset = 'inherit' },
+        completion = {
+          menu = { auto_show = true },
+          list = {
+            selection = {
+              preselect = false,
+            },
+          },
+        },
+      },
     },
   },
 }
