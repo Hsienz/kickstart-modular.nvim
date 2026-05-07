@@ -17,6 +17,12 @@ return {
     config.defaults.keymap.fzf['ctrl-b'] = 'preview-page-up'
     config.defaults.keymap.builtin['<c-f>'] = 'preview-page-down'
     config.defaults.keymap.builtin['<c-b>'] = 'preview-page-up'
+
+    opts.file_ignore_patterns = {
+      '%.prefab',
+      '%.meta',
+      '%.asset',
+    }
   end,
 
   config = function(_, opts)
