@@ -256,6 +256,7 @@ return {
         vim.lsp.config(name, server)
         vim.lsp.enable(name)
       end
+      vim.lsp.enable 'ysls'
     end,
   },
 }

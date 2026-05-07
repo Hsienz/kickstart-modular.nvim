@@ -36,6 +36,7 @@ return {
           yaml = true,
           markdown = true,
           ['markdown.mdx'] = true,
+          yarn = true,
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
           return { timeout_ms = 500 }
