@@ -1,16 +1,16 @@
 return {
-  {
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {
-      transparent = true,
-      styles = {
-        sidebars = 'transparent',
-        floats = 'transparent',
-      },
-    },
-  },
+  -- {
+  --   'folke/tokyonight.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     transparent = true,
+  --     styles = {
+  --       sidebars = 'transparent',
+  --       floats = 'transparent',
+  --     },
+  --   },
+  -- },
   {
     'catppuccin/nvim',
     lazy = false,
@@ -49,7 +49,7 @@ return {
     },
     config = function(_, opts)
       require('evergarden').setup(opts)
-      vim.cmd.colorscheme 'evergarden'
+      -- vim.cmd.colorscheme 'evergarden'
     end,
   },
   {
@@ -76,5 +76,14 @@ return {
     lazy = false,
     priority = 1000,
     config = function() require('lume').setup() end,
+  },
+  {
+    'ray-x/aurora',
+    init = function()
+      vim.g.aurora_italic = 1
+      vim.g.aurora_transparent = 1
+      vim.g.aurora_bold = 1
+    end,
+    config = function() vim.cmd.colorscheme 'aurora' end,
   },
 }

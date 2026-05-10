@@ -1,7 +1,7 @@
 return {
   'A7Lavinraj/fyler.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  lazy = false,
+  lazy = true,
   keys = {
     { '<leader>e', '<Cmd>Fyler kind=split_left_most<Cr>', desc = 'Open Fyler View' },
   },
@@ -11,7 +11,7 @@ return {
     },
     views = {
       finder = {
-        default_explorer = true,
+        default_explorer = false,
         columns_order = { 'git', 'diagnostic' },
         columns = {
           git = {
