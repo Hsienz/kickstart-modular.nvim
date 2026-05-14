@@ -49,7 +49,7 @@ return {
     },
     config = function(_, opts)
       require('evergarden').setup(opts)
-      -- vim.cmd.colorscheme 'evergarden'
+      vim.cmd.colorscheme 'evergarden'
     end,
   },
   {
@@ -84,6 +84,6 @@ return {
       vim.g.aurora_transparent = 1
       vim.g.aurora_bold = 1
     end,
-    config = function() vim.cmd.colorscheme 'aurora' end,
+    -- config = function() vim.cmd.colorscheme 'aurora' end,
   },
 }

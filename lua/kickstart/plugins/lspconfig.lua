@@ -166,7 +166,8 @@ return {
             clangdFileStatus = true,
           },
         },
-        tsgo = {},
+        -- tsgo = {},
+        vtsls = {},
         tailwindcss = {},
         jsonls = {
           schemas = require('schemastore').json.schemas(),
