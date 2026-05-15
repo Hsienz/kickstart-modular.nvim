@@ -49,7 +49,7 @@ return {
     },
     config = function(_, opts)
       require('evergarden').setup(opts)
-      vim.cmd.colorscheme 'evergarden'
+      -- vim.cmd.colorscheme 'evergarden'
     end,
   },
   {
@@ -85,5 +85,17 @@ return {
       vim.g.aurora_bold = 1
     end,
     -- config = function() vim.cmd.colorscheme 'aurora' end,
+  },
+  {
+    'jpwol/thorn.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = false,
+    },
+    config = function(_, opts)
+      require('thorn').setup(opts)
+      vim.cmd.colorscheme 'thorn'
+    end,
   },
 }

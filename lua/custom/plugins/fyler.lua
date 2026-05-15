@@ -6,6 +6,9 @@ return {
     { '<leader>e', '<Cmd>Fyler kind=split_left_most<Cr>', desc = 'Open Fyler View' },
   },
   opts = {
+    hooks = {
+      on_rename = function(src_path, destination_path) Snacks.rename.on_rename_file(src_path, destination_path) end,
+    },
     integrations = {
       icon = 'nvim_web_devicons',
     },
