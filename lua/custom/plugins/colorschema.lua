@@ -91,7 +91,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      transparent = false,
+      transparent = true,
     },
     config = function(_, opts)
       require('thorn').setup(opts)
