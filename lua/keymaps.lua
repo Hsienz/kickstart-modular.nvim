@@ -78,6 +78,24 @@ vim.keymap.set('n', '<leader>bd', '<cmd>:bp<bar>sp<bar>bn<bar>bd<cr>', { desc = 
 vim.keymap.set('n', '<leader>bo', '<cmd>:bd|e#<cr>', { desc = 'Delete Other Buffers' })
 vim.keymap.set('n', '<leader>bD', '<cmd>:bd<cr>', { desc = 'Delete Buffer and Window' })
 
+-- diagnostic
+local diagnostic_goto = function(next, severity)
+  return function()
+    vim.diagnostic.jump {
+      count = (next and 1 or -1) * vim.v.count1,
+      severity = severity and vim.diagnostic.severity[severity] or nil,
+      float = true,
+    }
+  end
+end
+vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
+vim.keymap.set('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
+vim.keymap.set('n', '[d', diagnostic_goto(false), { desc = 'Prev Diagnostic' })
+vim.keymap.set('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
+vim.keymap.set('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
+vim.keymap.set('n', ']w', diagnostic_goto(true, 'WARN'), { desc = 'Next Warning' })
+vim.keymap.set('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev Warning' })
+
 -- windows
 vim.keymap.set('n', '<leader>-', '<C-W>s', { desc = 'Split Window Below', remap = true })
 vim.keymap.set('n', '<leader>|', '<C-W>v', { desc = 'Split Window Right', remap = true })

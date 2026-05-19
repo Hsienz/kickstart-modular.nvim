@@ -83,6 +83,11 @@ return {
           --  For example, in C this would take you to the header.
           -- map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+          -- Add or change a keymap
+          map('K', vim.lsp.buf.hover, 'Hover')
+          -- Capability-based keymap (only set if server supports it)
+          map('<leader>ca', vim.lsp.buf.code_action, 'Code Action')
+
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed

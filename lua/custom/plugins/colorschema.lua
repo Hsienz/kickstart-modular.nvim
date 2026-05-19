@@ -49,7 +49,7 @@ return {
     },
     config = function(_, opts)
       require('evergarden').setup(opts)
-      -- vim.cmd.colorscheme 'evergarden'
+      vim.cmd.colorscheme 'evergarden'
     end,
   },
   {
@@ -59,10 +59,11 @@ return {
     config = function()
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
-      -- vim.g.everforest_background = "soft"
-      -- vim.g.everforest_enable_italic = true
-      -- vim.g.everforest_transparent_background = 2
-      -- vim.g.everforest_float_style = "blend"
+      vim.g.everforest_background = 'soft'
+      vim.g.everforest_enable_italic = true
+      vim.g.everforest_transparent_background = 2
+      vim.g.everforest_float_style = 'blend'
+      -- vim.cmd.colorscheme 'everforest'
     end,
   },
   {
@@ -95,7 +96,7 @@ return {
     },
     config = function(_, opts)
       require('thorn').setup(opts)
-      vim.cmd.colorscheme 'thorn'
+      -- vim.cmd.colorscheme 'thorn'
     end,
   },
 }
