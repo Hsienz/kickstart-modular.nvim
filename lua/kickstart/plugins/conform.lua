@@ -37,6 +37,7 @@ return {
           markdown = true,
           ['markdown.mdx'] = true,
           yarn = true,
+          xml = true,
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
           return { timeout_ms = 500 }
@@ -65,6 +66,7 @@ return {
         yaml = { 'biome' },
         markdown = { 'prettier' },
         ['markdown.mdx'] = { 'prettier' },
+        xml = { 'xmlformatter' },
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
