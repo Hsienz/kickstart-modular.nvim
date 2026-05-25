@@ -198,6 +198,7 @@ return {
         glsl_analyzer = {},
         prettier = {},
         marksman = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
