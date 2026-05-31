@@ -199,6 +199,17 @@ return {
         prettier = {},
         marksman = {},
         clangd = {},
+        roslyn = {
+          settings = {
+            ['csharp|inlay_hints'] = {
+              csharp_enable_inlay_hints_for_implicit_object_creation = true,
+              csharp_enable_inlay_hints_for_implicit_variable_types = true,
+            },
+            ['csharp|code_lens'] = {
+              dotnet_enable_references_code_lens = true,
+            },
+          },
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -265,6 +276,8 @@ return {
         vim.lsp.enable(name)
       end
       vim.lsp.enable 'ysls'
+      -- this break scrollEOF.nvim, waiting for fix
+      -- vim.lsp.codelens.enable(true)
     end,
   },
 }

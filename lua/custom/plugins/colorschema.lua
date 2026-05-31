@@ -25,6 +25,10 @@ return {
         solid = false,
       },
     },
+    config = function(_, opts)
+      require('catppuccin').setup(opts)
+      vim.cmd.colorscheme 'catppuccin'
+    end,
   },
   {
     'everviolet/nvim',
@@ -49,21 +53,7 @@ return {
     },
     config = function(_, opts)
       require('evergarden').setup(opts)
-      vim.cmd.colorscheme 'evergarden'
-    end,
-  },
-  {
-    'sainnhe/everforest',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
-      vim.g.everforest_background = 'soft'
-      vim.g.everforest_enable_italic = true
-      vim.g.everforest_transparent_background = 2
-      vim.g.everforest_float_style = 'blend'
-      -- vim.cmd.colorscheme 'everforest'
+      -- vim.cmd.colorscheme 'evergarden'
     end,
   },
   {
@@ -88,15 +78,15 @@ return {
     -- config = function() vim.cmd.colorscheme 'aurora' end,
   },
   {
-    'jpwol/thorn.nvim',
+    'wnkz/monoglow.nvim',
     lazy = false,
     priority = 1000,
     opts = {
       transparent = true,
     },
     config = function(_, opts)
-      require('thorn').setup(opts)
-      -- vim.cmd.colorscheme 'thorn'
+      require('monoglow').setup(opts)
+      -- vim.cmd.colorscheme 'monoglow'
     end,
   },
 }
