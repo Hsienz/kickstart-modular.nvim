@@ -210,6 +210,7 @@ return {
             },
           },
         },
+        copilot = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -276,8 +277,7 @@ return {
         vim.lsp.enable(name)
       end
       vim.lsp.enable 'ysls'
-      -- this break scrollEOF.nvim, waiting for fix
-      -- vim.lsp.codelens.enable(true)
+      vim.lsp.codelens.enable(true)
     end,
   },
 }
