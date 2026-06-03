@@ -42,7 +42,7 @@ return {
           cpp = true,
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
-          return { timeout_ms = 500 }
+          return { timeout_ms = 1500 }
         else
           return nil
         end

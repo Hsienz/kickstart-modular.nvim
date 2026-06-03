@@ -7,6 +7,9 @@ return {
         backend = 'tmux',
         enabled = true,
       },
+      win = {
+        layout = 'float',
+      },
     },
     nes = {
       enabled = true,
@@ -14,7 +17,7 @@ return {
   },
   keys = {
     {
-      '<S-tab>',
+      '<tab>',
       function()
         -- if there is a next edit, jump to it, otherwise apply it if any
         if not require('sidekick').nes_jump_or_apply() then
@@ -30,11 +33,11 @@ return {
       desc = 'Sidekick Focus',
       mode = { 'n', 't', 'i', 'x' },
     },
-    {
-      '<leader>aa',
-      function() require('sidekick.cli').toggle() end,
-      desc = 'Sidekick Toggle CLI',
-    },
+    -- {
+    --   '<leader>aa',
+    --   function() require('sidekick.cli').toggle() end,
+    --   desc = 'Sidekick Toggle CLI',
+    -- },
     {
       '<leader>as',
       function() require('sidekick.cli').select() end,
@@ -72,7 +75,7 @@ return {
     },
     -- Example of a keybinding to open Claude directly
     {
-      '<leader>ao',
+      '<leader>aa',
       function() require('sidekick.cli').toggle { name = 'opencode', focus = true } end,
       desc = 'Sidekick Toggle Opencode',
     },
