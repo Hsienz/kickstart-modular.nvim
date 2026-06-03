@@ -12,7 +12,7 @@ return {
       },
     },
     nes = {
-      enabled = true,
+      -- enabled = true,
     },
   },
   keys = {
