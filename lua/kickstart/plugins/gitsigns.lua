@@ -39,21 +39,22 @@ return {
       end
 
       -- Navigation
-      map('n', ']c', function()
+      map('n', ']h', function()
         if vim.wo.diff then
           vim.cmd.normal { ']c', bang = true }
         else
           gitsigns.nav_hunk 'next'
         end
-      end, { desc = 'Jump to next git [c]hange' })
-
-      map('n', '[c', function()
+      end, { desc = 'Next Hunk' })
+      map('n', '[h', function()
         if vim.wo.diff then
           vim.cmd.normal { '[c', bang = true }
         else
           gitsigns.nav_hunk 'prev'
         end
-      end, { desc = 'Jump to previous git [c]hange' })
+      end, { desc = 'Prev Hunk' })
+      map('n', ']H', function() gs.nav_hunk 'last' end, { desc = 'Last Hunk' })
+      map('n', '[H', function() gs.nav_hunk 'first' end, { desc = 'First Hunk' })
 
       -- Actions
       -- visual mode

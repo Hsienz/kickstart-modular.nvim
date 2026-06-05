@@ -81,6 +81,12 @@ return {
           textobject = 'gb',
         },
       }
+      require('mini.input').setup()
+      require('mini.notify').setup {
+        lsp_progress = {
+          enable = false,
+        },
+      }
     end,
   },
 }
