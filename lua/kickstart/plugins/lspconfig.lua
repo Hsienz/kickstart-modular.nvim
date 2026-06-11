@@ -199,6 +199,7 @@ return {
         prettier = {},
         marksman = {},
         clangd = {},
+        zls = {},
         roslyn = {
           settings = {
             ['csharp|inlay_hints'] = {

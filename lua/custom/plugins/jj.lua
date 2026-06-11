@@ -6,7 +6,7 @@ return {
   config = function()
     require('jj').setup {
       diff = {
-        backend = 'codediff',
+        backend = 'diffview',
       },
     }
   end,

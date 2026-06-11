@@ -25,10 +25,7 @@ return {
         solid = false,
       },
     },
-    config = function(_, opts)
-      require('catppuccin').setup(opts)
-      vim.cmd.colorscheme 'evergarden'
-    end,
+    config = function(_, opts) require('catppuccin').setup(opts) end,
   },
   {
     'everviolet/nvim',
@@ -53,7 +50,7 @@ return {
     },
     config = function(_, opts)
       require('evergarden').setup(opts)
-      -- vim.cmd.colorscheme 'evergarden'
+      vim.cmd.colorscheme 'evergarden'
     end,
   },
   {
@@ -76,17 +73,5 @@ return {
       vim.g.aurora_bold = 1
     end,
     -- config = function() vim.cmd.colorscheme 'aurora' end,
-  },
-  {
-    'wnkz/monoglow.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {
-      transparent = true,
-    },
-    config = function(_, opts)
-      require('monoglow').setup(opts)
-      -- vim.cmd.colorscheme 'monoglow'
-    end,
   },
 }
