@@ -5,7 +5,7 @@ return {
   branch = 'canola',
   lazy = false,
   keys = {
-    { '<leader>E', '<cmd>Canola --float<CR>', desc = 'Explorer' },
+    { '<leader>fm', '<cmd>Canola --float<CR>', desc = 'Explorer (Canola)' },
   },
   init = function()
     vim.g.canola_git = {
