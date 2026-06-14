@@ -2,6 +2,7 @@ return {
   'A7Lavinraj/fyler.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   lazy = true,
+  commit = 'e87911e6c21d099225063f5aa672e00f6dbb5976',
   keys = {
     { '<leader>e', '<Cmd>Fyler kind=split_left_most<Cr>', desc = 'Open Fyler View' },
   },
@@ -12,34 +13,44 @@ return {
     integrations = {
       icon = 'nvim_web_devicons',
     },
-    extensions = {
-      git = {
-        enabled = true,
-        inline = true,
-        icons = {
-          [' M'] = { icon = '', hl = 'FylerGitModified' },
-          ['M '] = { icon = '', hl = 'FylerGitStaged' },
-          ['MM'] = { icon = '', hl = 'FylerGitStaged' },
-          ['??'] = { icon = '', hl = 'FylerGitUntracked' },
-          [' D'] = { icon = '', hl = 'FylerGitDeleted' },
-          ['D '] = { icon = '', hl = 'FylerGitStaged' },
-          ['R '] = { icon = '', hl = 'FylerGitRenamed' },
-          ['UU'] = { icon = '󰦦', hl = 'FylerGitConflict' },
-          ['!!'] = { icon = '', hl = 'FylerGitIgnored' },
+    views = {
+      finder = {
+        default_explorer = false,
+        columns_order = { 'git', 'diagnostic' },
+        columns = {
+          git = {
+            enabled = true,
+            symbols = {
+              Untracked = '',
+              Added = '',
+              Modified = '',
+              Deleted = '',
+              Renamed = '',
+              Copied = '󱐪',
+              Conflict = '󰦦',
+              Ignored = '',
+            },
+          },
+          diagnostic = {
+            enabled = true,
+            symbols = {
+              Error = '󰅜',
+              Warn = '󱇎',
+              Info = '',
+              Hint = '',
+            },
+          },
+          link = {
+            enabled = false,
+          },
+          permission = {
+            enabled = false,
+          },
+          size = {
+            enabled = false,
+          },
         },
       },
-      -- diagnostic = {
-      --   enabled = true,
-      --   symbols = {
-      --     Error = '󰅜',
-      --     Warn = '󱇎',
-      --     Info = '',
-      --     Hint = '',
-      --   },
-      -- },
     },
-    -- ui = {
-    --   indent_guides = true,
-    -- },
   },
 }
