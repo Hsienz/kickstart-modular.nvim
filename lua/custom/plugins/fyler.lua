@@ -12,44 +12,34 @@ return {
     integrations = {
       icon = 'nvim_web_devicons',
     },
-    views = {
-      finder = {
-        default_explorer = false,
-        columns_order = { 'git', 'diagnostic' },
-        columns = {
-          git = {
-            enabled = true,
-            symbols = {
-              Untracked = '',
-              Added = '',
-              Modified = '',
-              Deleted = '',
-              Renamed = '',
-              Copied = '',
-              Conflict = '󰕚',
-              Ignored = '',
-            },
-          },
-          diagnostic = {
-            enabled = true,
-            symbols = {
-              Error = '󰅜',
-              Warn = '󱇎',
-              Info = '',
-              Hint = '',
-            },
-          },
-          link = {
-            enabled = false,
-          },
-          permission = {
-            enabled = false,
-          },
-          size = {
-            enabled = false,
-          },
+    extensions = {
+      git = {
+        enabled = true,
+        inline = true,
+        icons = {
+          [' M'] = { icon = '', hl = 'FylerGitModified' },
+          ['M '] = { icon = '', hl = 'FylerGitStaged' },
+          ['MM'] = { icon = '', hl = 'FylerGitStaged' },
+          ['??'] = { icon = '', hl = 'FylerGitUntracked' },
+          [' D'] = { icon = '', hl = 'FylerGitDeleted' },
+          ['D '] = { icon = '', hl = 'FylerGitStaged' },
+          ['R '] = { icon = '', hl = 'FylerGitRenamed' },
+          ['UU'] = { icon = '󰦦', hl = 'FylerGitConflict' },
+          ['!!'] = { icon = '', hl = 'FylerGitIgnored' },
         },
       },
+      -- diagnostic = {
+      --   enabled = true,
+      --   symbols = {
+      --     Error = '󰅜',
+      --     Warn = '󱇎',
+      --     Info = '',
+      --     Hint = '',
+      --   },
+      -- },
     },
+    -- ui = {
+    --   indent_guides = true,
+    -- },
   },
 }
