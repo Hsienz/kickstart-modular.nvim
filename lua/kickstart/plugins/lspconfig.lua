@@ -221,7 +221,7 @@ return {
             },
           },
         },
-        copilot = {},
+        -- copilot = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
