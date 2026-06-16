@@ -11,7 +11,7 @@ return {
     dashboard = { enabled = true },
     explorer = { enabled = false },
     image = { enabled = true },
-    indent = { enabled = true },
+    indent = { enabled = false },
     input = { enabled = false },
     picker = { enabled = true },
     notifier = { enabled = false },
