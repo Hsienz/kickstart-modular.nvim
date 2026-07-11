@@ -38,13 +38,13 @@ return {
       },
       editor = {
         transparent_background = true,
-        -- sign = { color = 'surface0' },
+        sign = { color = 'none' },
         float = {
-          -- color = 'mentle',
-          -- solid_border = true,
+          color = 'none',
+          solid_border = false,
         },
         completion = {
-          -- color = 'mentle',
+          color = 'none',
         },
       },
     },

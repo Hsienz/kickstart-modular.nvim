@@ -24,7 +24,7 @@ return {
     extensions = {
       git = {
         enabled = true,
-        inline = true,
+        inline = false,
         icons = {
           [' M'] = { icon = '', hl = 'FylerGitModified' },
           ['M '] = { icon = '', hl = 'FylerGitStaged' },
