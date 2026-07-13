@@ -1,5 +1,6 @@
 return {
   'saghen/blink.cmp',
+  commit = 'cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16',
   build = function()
     -- build the fuzzy matcher, wait up to 60 seconds
     -- you can use `gb` in `:Lazy` to rebuild the plugin as needed
