@@ -1,178 +1,88 @@
----@module 'lazy'
----@type LazySpec
-return {
-  { -- Collection of various small independent plugins/modules
-    'nvim-mini/mini.nvim',
-    -- keys = {
-    --   {
-    --     '<leader>fm',
-    --     function() require('mini.files').open(vim.api.nvim_buf_get_name(0), true) end,
-    --     desc = 'Open mini.files (Directory of Current File)',
-    --   },
-    --   {
-    --     '<leader>fM',
-    --     function() require('mini.files').open(vim.uv.cwd(), true) end,
-    --     desc = 'Open mini.files (cwd)',
-    --   },
-    -- },
-    config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [I]next [Q]uote
-      --  - ci'  - [C]hange [I]nside [']quote
-      local ai = require 'mini.ai'
-      local gen_ai_spec = require('mini.extra').gen_ai_spec
-      require('mini.ai').setup {
-        custom_textobjects = {
-          o = ai.gen_spec.treesitter { -- code block
-            a = { '@block.outer', '@conditional.outer', '@loop.outer' },
-            i = { '@block.inner', '@conditional.inner', '@loop.inner' },
-          },
-          f = ai.gen_spec.treesitter { a = '@function.outer', i = '@function.inner' }, -- function
-          c = ai.gen_spec.treesitter { a = '@class.outer', i = '@class.inner' }, -- class
-          t = { '<([%p%w]-)%f[^<%w][^<>]->.-</%1>', '^<.->().*()</[^/]->$' }, -- tags
-          d = { '%f[%d]%d+' }, -- digits
-          e = { -- Word with case
-            { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },
-            '^().*()$',
-          },
-          g = gen_ai_spec.buffer(), -- buffer
-          u = ai.gen_spec.function_call(), -- u for "Usage"
-          U = ai.gen_spec.function_call { name_pattern = '[%w_]' }, -- without dot in function name
-        },
-        -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
-        -- mappings = {
-        --   around_next = 'aa',
-        --   inside_next = 'ii',
-        -- },
-        n_lines = 500,
-      }
+local function gh(repo) return 'https://github.com/' .. repo end
 
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup {
-        mappings = {
-          add = 'gsa', -- Add surrounding in Normal and Visual modes
-          delete = 'gsd', -- Delete surrounding
-          find = 'gsf', -- Find surrounding (to the right)
-          find_left = 'gsF', -- Find surrounding (to the left)
-          highlight = 'gsh', -- Highlight surrounding
-          replace = 'gsr', -- Replace surrounding
+-- [[ mini.nvim ]]
+--  A collection of various small independent plugins/modules
+vim.pack.add { gh 'nvim-mini/mini.nvim' }
 
-          suffix_last = 'l', -- Suffix to search with "prev" method
-          suffix_next = 'n', -- Suffix to search with "next" method
-        },
-      }
+-- If a nerd font is available, load the icons module for pretty icons in various plugins.
+if vim.g.have_nerd_font then
+  require('mini.icons').setup()
+  -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
+  MiniIcons.mock_nvim_web_devicons()
+end
 
-      -- -- Simple and easy statusline.
-      -- --  You could remove this setup call if you don't like it,
-      -- --  and try some other statusline plugin
-      -- local statusline = require 'mini.statusline'
-      -- -- set use_icons to true if you have a Nerd Font
-      -- statusline.setup { use_icons = vim.g.have_nerd_font }
-      --
-      -- -- You can configure sections in the statusline by overriding their
-      -- -- default behavior. For example, here we set the section for
-      -- -- cursor location to LINE:COLUMN
-      -- ---@diagnostic disable-next-line: duplicate-set-field
-      -- statusline.section_location = function() return '%2l:%-2v' end
+-- Better Around/Inside textobjects
+--
+-- Examples:
+--  - va)  - [V]isually select [A]round [)]paren
+--  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
+--  - ci'  - [C]hange [I]nside [']quote
+local ai = require 'mini.ai'
+local gen_ai_spec = require('mini.extra').gen_ai_spec
+require('mini.ai').setup {
+  custom_textobjects = {
+    o = ai.gen_spec.treesitter { -- code block
+      a = { '@block.outer', '@conditional.outer', '@loop.outer' },
+      i = { '@block.inner', '@conditional.inner', '@loop.inner' },
+    },
+    f = ai.gen_spec.treesitter { a = '@function.outer', i = '@function.inner' }, -- function
+    c = ai.gen_spec.treesitter { a = '@class.outer', i = '@class.inner' }, -- class
+    t = { '<([%p%w]-)%f[^<%w][^<>]->.-</%1>', '^<.->().*()</[^/]->$' }, -- tags
+    d = { '%f[%d]%d+' }, -- digits
+    e = { -- Word with case
+      { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },
+      '^().*()$',
+    },
+    g = gen_ai_spec.buffer(), -- buffer
+    u = ai.gen_spec.function_call(), -- u for "Usage"
+    U = ai.gen_spec.function_call { name_pattern = '[%w_]' }, -- without dot in function name
+  },
+  -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
+  -- mappings = {
+  --   around_next = 'aa',
+  --   inside_next = 'ii',
+  -- },
+  n_lines = 500,
+}
 
-      -- ... and there is more!
-      --  Check out: https://github.com/nvim-mini/mini.nvim
-      require('mini.move').setup()
-      require('mini.comment').setup {
-        options = {
-          custom_commentstring = function() return require('ts_context_commentstring').calculate_commentstring() or vim.bo.commentstring end,
-        },
-        mappings = {
-          textobject = 'gb',
-        },
-      }
-      require('mini.input').setup()
-      require('mini.notify').setup {
-        lsp_progress = {
-          enable = false,
-        },
-      }
-      -- require('mini.files').setup {
-      --   windows = {
-      --     preview = true,
-      --     width_focus = 30,
-      --     width_preview = 100,
-      --   },
-      --   options = {
-      --     use_as_default_explorer = false,
-      --   },
-      --   mappings = {
-      --     synchronize = 'w',
-      --   },
-      -- }
-      --
-      -- -- https://nvim-mini.org/mini.nvim/doc/mini-files.html#minifiles-examples-createmappingtoshowhidedot-files
-      -- local show_dotfiles = true
-      --
-      -- local filter_show = function(fs_entry) return true end
-      --
-      -- local filter_hide = function(fs_entry) return not vim.startswith(fs_entry.name, '.') end
-      --
-      -- local toggle_dotfiles = function()
-      --   show_dotfiles = not show_dotfiles
-      --   local new_filter = show_dotfiles and filter_show or filter_hide
-      --   MiniFiles.refresh { content = { filter = new_filter } }
-      -- end
-      --
-      -- vim.api.nvim_create_autocmd('User', {
-      --   pattern = 'MiniFilesBufferCreate',
-      --   callback = function(args)
-      --     local buf_id = args.data.buf_id
-      --     -- Tweak left-hand side of mapping to your liking
-      --     vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = buf_id })
-      --   end,
-      -- })
-      --
-      -- -- https://nvim-mini.org/mini.nvim/doc/mini-files.html#minifiles-examples-createmappingstomodifytargetwindowviasplit
-      -- local map_split = function(buf_id, lhs, direction)
-      --   local rhs = function()
-      --     -- Make new window and set it as target
-      --     local cur_target = MiniFiles.get_explorer_state().target_window
-      --     local new_target = vim.api.nvim_win_call(cur_target, function()
-      --       vim.cmd(direction .. ' split')
-      --       return vim.api.nvim_get_current_win()
-      --     end)
-      --
-      --     MiniFiles.set_target_window(new_target)
-      --
-      --     -- This intentionally doesn't act on file under cursor in favor of
-      --     -- explicit "go in" action (`l` / `L`). To immediately open file,
-      --     -- add appropriate `MiniFiles.go_in()` call instead of this comment.
-      --   end
-      --
-      --   -- Adding `desc` will result into `show_help` entries
-      --   local desc = 'Split ' .. direction
-      --   vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
-      -- end
-      --
-      -- vim.api.nvim_create_autocmd('User', {
-      --   pattern = 'MiniFilesBufferCreate',
-      --   callback = function(args)
-      --     local buf_id = args.data.buf_id
-      --     -- Tweak keys to your liking
-      --     map_split(buf_id, '<C-s>', 'belowright horizontal')
-      --     map_split(buf_id, '<C-v>', 'belowright vertical')
-      --     map_split(buf_id, '<C-t>', 'tab')
-      --   end,
-      -- })
-      -- -- https://github.com/folke/snacks.nvim/blob/main/docs/rename.md#minifiles
-      -- vim.api.nvim_create_autocmd('User', {
-      --   pattern = 'MiniFilesActionRename',
-      --   callback = function(event) Snacks.rename.on_rename_file(event.data.from, event.data.to) end,
-      -- })
-    end,
+-- Add/delete/replace surroundings (brackets, quotes, etc.)
+--
+-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+-- - sd'   - [S]urround [D]elete [']quotes
+-- - sr)'  - [S]urround [R]eplace [)] [']
+require('mini.surround').setup()
+
+-- -- Simple and easy statusline.
+-- --  You could remove this setup call if you don't like it,
+-- --  and try some other statusline plugin
+-- local statusline = require 'mini.statusline'
+-- -- Set `use_icons` to true if you have a Nerd Font
+-- statusline.setup { use_icons = vim.g.have_nerd_font }
+--
+-- -- You can configure sections in the statusline by overriding their
+-- -- default behavior. For example, here we set the section for
+-- -- cursor location to LINE:COLUMN
+-- ---@diagnostic disable-next-line: duplicate-set-field
+-- statusline.section_location = function() return '%2l:%-2v' end
+
+-- ... and there is more!
+--  Check out: https://github.com/nvim-mini/mini.nvim
+require('mini.move').setup()
+require('mini.comment').setup {
+  options = {
+    custom_commentstring = function() return require('ts_context_commentstring').calculate_commentstring() or vim.bo.commentstring end,
+  },
+  mappings = {
+    textobject = 'gb',
   },
 }
+require('mini.input').setup()
+local notify = require 'mini.notify'
+notify.setup {
+  lsp_progress = {
+    enable = false,
+  },
+}
+vim.keymap.set('n', '<leader>n', function() notify.show_history() end)
+
 -- vim: ts=2 sts=2 sw=2 et

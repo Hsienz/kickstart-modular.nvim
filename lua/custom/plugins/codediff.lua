@@ -1,9 +1,9 @@
-return {
-  "esmuellert/codediff.nvim",
-  cmd = "CodeDiff",
-  opt = {
-    diff = {
-      conflict_result_position = "center",
-    },
+local function gh(repo) return 'https://github.com/' .. repo end
+
+vim.pack.add { { src = gh 'esmuellert/codediff.nvim' } }
+
+require('codediff').setup {
+  diff = {
+    conflict_result_position = 'center',
   },
 }

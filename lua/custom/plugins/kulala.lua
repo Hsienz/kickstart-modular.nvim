@@ -1,16 +1,9 @@
-return {
-  {
-    'mistweaverco/kulala.nvim',
-    keys = {
-      { '<leader>Rs', desc = 'Send request' },
-      { '<leader>Ra', desc = 'Send all requests' },
-      { '<leader>Rb', desc = 'Open scratchpad' },
-    },
-    ft = { 'http', 'rest' },
-    opts = {
-      global_keymaps = false,
-      global_keymaps_prefix = '<leader>R',
-      kulala_keymaps_prefix = '',
-    },
-  },
+local function gh(repo) return 'https://github.com/' .. repo end
+
+vim.pack.add { { src = gh 'mistweaverco/kulala.nvim' } }
+
+require('kulala').setup {
+  global_keymaps = false,
+  global_keymaps_prefix = '<leader>R',
+  kulala_keymaps_prefix = '',
 }

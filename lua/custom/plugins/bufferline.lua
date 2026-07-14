@@ -1,17 +1,12 @@
-return {
-  'akinsho/bufferline.nvim',
-  version = '*',
-  dependencies = 'nvim-tree/nvim-web-devicons',
-  config = function()
-    require('bufferline').setup {
-      options = {
+local function gh(repo) return 'https://github.com/' .. repo end
 
-        indicator = {
-          style = 'underline',
-        },
-        show_buffer_close_icons = false,
-        separator_style = 'thin',
-      },
-    }
-  end,
+vim.pack.add { { src = gh 'akinsho/bufferline.nvim' }, { src = gh 'nvim-tree/nvim-web-devicons' } }
+require('bufferline').setup {
+  options = {
+    indicator = {
+      style = 'underline',
+    },
+    show_buffer_close_icons = false,
+    separator_style = 'thin',
+  },
 }

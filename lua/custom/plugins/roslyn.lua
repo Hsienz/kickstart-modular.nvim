@@ -1,9 +1,9 @@
-return {
-  'seblyng/roslyn.nvim',
-  ---@module 'roslyn.config'
-  ---@type RoslynNvimConfig
-  opts = {
-    -- your configuration comes here; leave empty for default settings
-    filewatching = 'off',
-  },
+local function gh(repo) return 'https://github.com/' .. repo end
+
+vim.pack.add { { src = gh 'seblyng/roslyn.nvim' } }
+
+---@module 'roslyn.config'
+---@type RoslynNvimConfig
+require('roslyn').setup {
+  filewatching = 'off',
 }

@@ -1,9 +1,10 @@
-return {
-  'linux-cultist/venv-selector.nvim',
-  ft = 'python', -- Load when opening Python files
-  keys = { { ',v', '<cmd>VenvSelect<cr>' } }, -- Open picker on keymap
-  opts = {
-    options = {}, -- plugin-wide options
-    search = {}, -- custom search definitions
-  },
+local function gh(repo) return 'https://github.com/' .. repo end
+
+vim.pack.add { { src = gh 'linux-cultist/venv-selector.nvim' } }
+
+require('venv-selector').setup {
+  options = {}, -- plugin-wide options
+  search = {}, -- custom search definitions
 }
+
+vim.keymap.set('n', ',v', '<cmd>VenvSelect<cr>')

@@ -1,37 +1,49 @@
-return {
-  'pwntester/octo.nvim',
-  cmd = 'Octo',
-  event = { { event = 'BufReadCmd', pattern = 'octo://*' } },
-  opts = {
-    enable_builtin = true,
-    default_to_projects_v2 = true,
-    default_merge_method = 'squash',
-    picker = 'telescope',
-    ssh_aliases = { ['github-private'] = 'github.com' },
-  },
-  keys = {
-    { '<leader>gi', '<cmd>Octo issue list<CR>', desc = 'List Issues (Octo)' },
-    { '<leader>gI', '<cmd>Octo issue search<CR>', desc = 'Search Issues (Octo)' },
-    { '<leader>gp', '<cmd>Octo pr list<CR>', desc = 'List PRs (Octo)' },
-    { '<leader>gP', '<cmd>Octo pr search<CR>', desc = 'Search PRs (Octo)' },
-    { '<leader>gr', '<cmd>Octo repo list<CR>', desc = 'List Repos (Octo)' },
-    { '<leader>gS', '<cmd>Octo search<CR>', desc = 'Search (Octo)' },
+local function gh(repo) return 'https://github.com/' .. repo end
 
-    { '<localleader>a', '', desc = '+assignee (Octo)', ft = 'octo' },
-    { '<localleader>c', '', desc = '+comment/code (Octo)', ft = 'octo' },
-    { '<localleader>l', '', desc = '+label (Octo)', ft = 'octo' },
-    { '<localleader>i', '', desc = '+issue (Octo)', ft = 'octo' },
-    { '<localleader>r', '', desc = '+react (Octo)', ft = 'octo' },
-    { '<localleader>p', '', desc = '+pr (Octo)', ft = 'octo' },
-    { '<localleader>pr', '', desc = '+rebase (Octo)', ft = 'octo' },
-    { '<localleader>ps', '', desc = '+squash (Octo)', ft = 'octo' },
-    { '<localleader>v', '', desc = '+review (Octo)', ft = 'octo' },
-    { '<localleader>g', '', desc = '+goto_issue (Octo)', ft = 'octo' },
-    { '@', '@<C-x><C-o>', mode = 'i', ft = 'octo', silent = true },
-    { '#', '#<C-x><C-o>', mode = 'i', ft = 'octo', silent = true },
-  },
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons',
+vim.pack.add {
+  { src = gh 'pwntester/octo.nvim' },
+  { src = gh 'nvim-lua/plenary.nvim' },
+  { src = gh 'nvim-tree/nvim-web-devicons' },
+}
+
+require('octo').setup {
+  enable_builtin = true,
+  default_to_projects_v2 = true,
+  default_merge_method = 'squash',
+  picker = 'snacks',
+  ssh_aliases = { ['github-private'] = 'github.com' },
+  suppress_missing_scope = {
+    projects_v2 = true,
   },
 }
+
+vim.keymap.set('n', '<leader>gi', '<cmd>Octo issue list<CR>', { desc = 'List Issues (Octo)' })
+vim.keymap.set('n', '<leader>gI', '<cmd>Octo issue search<CR>', { desc = 'Search Issues (Octo)' })
+vim.keymap.set('n', '<leader>gp', '<cmd>Octo pr list<CR>', { desc = 'List PRs (Octo)' })
+vim.keymap.set('n', '<leader>gP', '<cmd>Octo pr search<CR>', { desc = 'Search PRs (Octo)' })
+vim.keymap.set('n', '<leader>gr', '<cmd>Octo repo list<CR>', { desc = 'List Repos (Octo)' })
+vim.keymap.set('n', '<leader>gS', '<cmd>Octo search<CR>', { desc = 'Search (Octo)' })
+
+local ok_wk, which_key = pcall(require, 'which-key')
+if ok_wk then
+  which_key.add {
+    { '<localleader>a', group = '+assignee (Octo)' },
+    { '<localleader>c', group = '+comment/code (Octo)' },
+    { '<localleader>l', group = '+label (Octo)' },
+    { '<localleader>i', group = '+issue (Octo)' },
+    { '<localleader>r', group = '+react (Octo)' },
+    { '<localleader>p', group = '+pr (Octo)' },
+    { '<localleader>pr', group = '+rebase (Octo)' },
+    { '<localleader>ps', group = '+squash (Octo)' },
+    { '<localleader>v', group = '+review (Octo)' },
+    { '<localleader>g', group = '+goto_issue (Octo)' },
+  }
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'octo',
+  callback = function(event)
+    vim.keymap.set('i', '@', '@<C-x><C-o>', { buffer = event.buf, silent = true })
+    vim.keymap.set('i', '#', '#<C-x><C-o>', { buffer = event.buf, silent = true })
+  end,
+})
