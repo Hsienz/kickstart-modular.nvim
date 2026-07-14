@@ -8,6 +8,7 @@ return {
       },
       highlight = true,
       lazy_update_context = true,
+      depth_limit = 5,
     }
   end,
 }

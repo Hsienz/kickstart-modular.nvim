@@ -4,6 +4,9 @@ return {
   config = function()
     require('lualine').setup {
       -- other options ...
+      options = {
+        globalstatus = true,
+      },
       sections = {
         -- other sections ...
         lualine_b = { 'branch', { 'diff', symbols = { added = ' ', modified = ' ', removed = ' ' } }, 'diagnostics' },

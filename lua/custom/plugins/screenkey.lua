@@ -10,8 +10,9 @@ return {
       -- or leave it empty to use the default settings
       win_opts = {
         height = 1,
+        width = 20,
       },
-      clear_after = 30,
+      -- clear_after = 30,
       group_mappings = true,
       filter = function(keys)
         local screenkey = require 'screenkey'

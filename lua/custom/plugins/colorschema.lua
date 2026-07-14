@@ -54,18 +54,6 @@ return {
     end,
   },
   {
-    'ricardoraposo/bonsai.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
-  {
-    'danfry1/lume',
-    lazy = false,
-    priority = 1000,
-    config = function() require('lume').setup() end,
-  },
-  {
     'ray-x/aurora',
     init = function()
       vim.g.aurora_italic = 1
@@ -73,5 +61,20 @@ return {
       vim.g.aurora_bold = 1
     end,
     -- config = function() vim.cmd.colorscheme 'aurora' end,
+  },
+  {
+    'sainnhe/everforest',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.everforest_enable_italic = true
+      vim.g.everforest_background = 'hard'
+      vim.g.everforest_transparent_background = 2
+      vim.g.everforest_float_style = 'blend'
+      vim.g.everforest_pmenu_style = 'blend'
+      -- vim.cmd.colorscheme 'everforest'
+    end,
   },
 }
