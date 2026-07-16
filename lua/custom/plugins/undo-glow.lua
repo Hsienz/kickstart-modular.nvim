@@ -3,7 +3,6 @@ local function gh(repo) return 'https://github.com/' .. repo end
 vim.pack.add {
   { src = gh 'y3owk1n/undo-glow.nvim' },
   { src = gh 'gbprod/yanky.nvim' },
-  { src = gh 'folke/flash.nvim' },
 }
 
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -64,9 +63,6 @@ require('yanky').setup {
     on_yank = false,
   },
 }
-
--- Highlight cursor after jumping
-vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('undo-glow').flash_jump() end, { desc = 'Flash jump' })
 
 ---@type UndoGlow.Config
 require('undo-glow').setup {

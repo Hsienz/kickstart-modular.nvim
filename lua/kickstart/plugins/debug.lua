@@ -13,20 +13,40 @@ vim.pack.add {
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/jay-babu/mason-nvim-dap.nvim',
   'https://github.com/leoluz/nvim-dap-go',
+ -- { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.*")  },
+	'https://github.com/Weissle/persistent-breakpoints.nvim'
+}
+
+require("persistent-breakpoints").setup {
+	load_breakpoints_event ={ "BufReadPost"}
 }
 
 -- Basic debugging keymaps, feel free to change to your liking!
-vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
-vim.keymap.set('n', '<F1>', function() require('dap').step_into() end, { desc = 'Debug: Step Into' })
-vim.keymap.set('n', '<F2>', function() require('dap').step_over() end, { desc = 'Debug: Step Over' })
-vim.keymap.set('n', '<F3>', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
-vim.keymap.set('n', '<leader>b', function() require('dap').toggle_breakpoint() end, { desc = 'Debug: Toggle Breakpoint' })
-vim.keymap.set('n', '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = 'Debug: Set Breakpoint' })
+vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
+vim.keymap.set('n', '<leader>di', function() require('dap').step_into() end, { desc = 'Debug: Step Into' })
+vim.keymap.set('n', '<leader>dO', function() require('dap').step_over() end, { desc = 'Debug: Step Over' })
+vim.keymap.set('n', '<leader>do', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
+vim.keymap.set('n', '<leader>db', function() require('persistent-breakpoints.api').toggle_breakpoint() end, { desc = 'Debug: Toggle Breakpoint' })
+vim.keymap.set('n', '<leader>dB', function() require('persistent-breakpoints.api').set_conditional_breakpoint() end, { desc = 'Debug: Set Breakpoint' })
 -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-vim.keymap.set('n', '<F7>', function() require('dapui').toggle() end, { desc = 'Debug: See last session result.' })
+vim.keymap.set('n', '<leader>d<tab>', function() require('dapui').toggle() end, { desc = 'Debug: See last session result.' })
+-- From LazyVim
+vim.keymap.set('n', '<leader>dC', function() require('dap').run_to_cursor() end, { desc = 'Debug: Run to Cursor' })
+vim.keymap.set('n', '<leader>dj', function() require('dap').down() end, { desc = 'Debug: Run Down' })
+vim.keymap.set('n', '<leader>dk', function() require('dap').up() end, { desc = 'Debug: Run Up' })
+vim.keymap.set('n', '<leader>dg', function() require('dap').goto() end, { desc = 'Debug: Go to Line(No Execute)' })
+vim.keymap.set('n', '<leader>dl', function() require('dap').run_last() end, { desc = 'Debug: Run Last' })
+vim.keymap.set('n', '<leader>dP', function() require('dap').pause() end, { desc = 'Debug: Pause' })
+vim.keymap.set('n', '<leader>dr', function() require('dap').repl.toggle() end, { desc = 'Debug: Toggle REPL' })
+vim.keymap.set('n', '<leader>ds', function() require('dap').session() end, { desc = 'Debug: Session' })
+vim.keymap.set('n', '<leader>dt', function() require('dap').terminate() end, { desc = 'Debug: Terminate' })
+vim.keymap.set('n', '<leader>dw', function() require('dap.ui.widgets').hover() end, { desc = 'Debug: Widgets' })
+vim.keymap.set('n', '<leader>dX', function() require('persistent-breakpoints.api').clear_all_breakpoints() end, { desc = 'Debug: Clear All Breakpoints' })
+vim.keymap.set('n', '<leader>dL', function() require('persistent-breakpoints.api').set_log_point() end, { desc = 'Debug: Set Log Point' })
 
 local dap = require 'dap'
 local dapui = require 'dapui'
+-- local dapui = require 'dap-view'
 
 require('mason-nvim-dap').setup {
   -- Makes a best effort to setup the various debuggers with
@@ -69,17 +89,23 @@ dapui.setup {
   },
 }
 
+-- dapui.setup {
+-- 	windows = {
+-- 		position = "right"
+-- 	}
+-- }
+
 -- Change breakpoint icons
--- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
--- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
--- local breakpoint_icons = vim.g.have_nerd_font
---     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
---   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
--- for type, icon in pairs(breakpoint_icons) do
---   local tp = 'Dap' .. type
---   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
---   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
--- end
+vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+local breakpoint_icons = vim.g.have_nerd_font
+    and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+  or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+for type, icon in pairs(breakpoint_icons) do
+  local tp = 'Dap' .. type
+  local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+  vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+end
 
 dap.listeners.after.event_initialized['dapui_config'] = dapui.open
 dap.listeners.before.event_terminated['dapui_config'] = dapui.close
@@ -93,3 +119,25 @@ require('dap-go').setup {
     detached = vim.fn.has 'win32' == 0,
   },
 }
+
+local dap = require 'dap'
+dap.adapters.codelldb = {
+  type = 'executable',
+  command = 'codelldb', -- or if not in $PATH: "/absolute/path/to/codelldb"
+
+  -- On windows you may have to uncomment this:
+  -- detached = false,
+}
+dap.configurations.cpp = {
+  {
+    name = 'Launch file',
+    type = 'codelldb',
+    request = 'launch',
+    program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+  },
+}
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+dap.configurations.zig = dap.configurations.cpp
