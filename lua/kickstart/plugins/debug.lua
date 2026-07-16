@@ -14,12 +14,45 @@ vim.pack.add {
   'https://github.com/jay-babu/mason-nvim-dap.nvim',
   'https://github.com/leoluz/nvim-dap-go',
  -- { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.*")  },
-	'https://github.com/Weissle/persistent-breakpoints.nvim'
+	'https://github.com/Weissle/persistent-breakpoints.nvim',
+	'https://github.com/ownself/nvim-dap-unity'
 }
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(ev)
+    local spec = ev.data.spec
+    local kind = ev.data.kind
+
+    if spec.name == "nvim-dap-unity"
+      and (kind == "install" or kind == "update") then
+      require("nvim-dap-unity").install()
+    end
+  end,
+})
 
 require("persistent-breakpoints").setup {
 	load_breakpoints_event ={ "BufReadPost"}
 }
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function(args)
+        vim.pack.add({
+            "https://github.com/mfussenegger/nvim-dap-python",
+        })
+
+        require("dap-python").setup("uv")
+
+        local opts = { buffer = args.buf }
+
+        vim.keymap.set("n", "<leader>dPt", function()
+            require("dap-python").test_method()
+        end, vim.tbl_extend("force", opts, { desc = "Debug: Method" }))
+
+        vim.keymap.set("n", "<leader>dPc", function()
+            require("dap-python").test_class()
+        end, vim.tbl_extend("force", opts, { desc = "Debug: Class" }))
+    end,
+})
 
 -- Basic debugging keymaps, feel free to change to your liking!
 vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
@@ -128,6 +161,13 @@ dap.adapters.codelldb = {
   -- On windows you may have to uncomment this:
   -- detached = false,
 }
+
+dap.adapters.netcoredbg = {
+	type = "executable",
+	command = "netcoredbg",
+	args = { "--interpreter=vscode" }
+}
+
 dap.configurations.cpp = {
   {
     name = 'Launch file',
@@ -141,3 +181,18 @@ dap.configurations.cpp = {
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 dap.configurations.zig = dap.configurations.cpp
+
+dap.configurations.cs = {
+	{
+		type = "netcoredbg",
+		name = "Launch file",
+		request = "launch",
+		program = function()
+		  return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/", "file")
+		end,
+		cwd = "${workspaceFolder}",
+	}
+}
+dap.configurations.vb = dap.configurations.cs
+dap.configurations.fsharp = dap.configurations.cs
+require("nvim-dap-unity").setup()
