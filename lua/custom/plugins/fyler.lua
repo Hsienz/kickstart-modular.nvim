@@ -14,7 +14,7 @@ require('fyler').setup {
   kind = 'split_left_most',
   kind_presets = {
     split_left_most = {
-      mappings = { n = { ['<CR>'] = { action = 'select', args = { close = true, pick = false } } } },
+      mappings = { n = { ['<CR>'] = { action = 'select', args = { close = true, pick = true } } } },
     },
   },
   extensions = {
