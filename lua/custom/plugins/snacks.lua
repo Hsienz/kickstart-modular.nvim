@@ -37,6 +37,7 @@ require('snacks').setup {
         { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
         { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
         { icon = ' ', key = 's', desc = 'Restore Session', action = function() require('persistence').load() end },
+        { icon = ' ', key = 'u', desc = 'Vim Pack Update', action = ':lua vim.pack.update()' },
         { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
       },
     },

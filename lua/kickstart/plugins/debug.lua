@@ -17,17 +17,6 @@ vim.pack.add {
 	'https://github.com/Weissle/persistent-breakpoints.nvim',
 	'https://github.com/ownself/nvim-dap-unity'
 }
-vim.api.nvim_create_autocmd("PackChanged", {
-  callback = function(ev)
-    local spec = ev.data.spec
-    local kind = ev.data.kind
-
-    if spec.name == "nvim-dap-unity"
-      and (kind == "install" or kind == "update") then
-      require("nvim-dap-unity").install()
-    end
-  end,
-})
 
 require("persistent-breakpoints").setup {
 	load_breakpoints_event ={ "BufReadPost"}
@@ -195,4 +184,6 @@ dap.configurations.cs = {
 }
 dap.configurations.vb = dap.configurations.cs
 dap.configurations.fsharp = dap.configurations.cs
-require("nvim-dap-unity").setup()
+require("nvim-dap-unity").setup({
+	auto_install_on_start = true
+})

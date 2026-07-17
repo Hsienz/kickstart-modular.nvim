@@ -2,7 +2,7 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { { src = gh 'NStefan002/screenkey.nvim' } }
 
-vim.keymap.set('n', '<leader>ts', function() require('screenkey').toggle_statusline_component() end, { desc = 'Toggle screenkey statusline component' })
+-- vim.keymap.set('n', '<leader>ts', function() require('screenkey').toggle_statusline_component() end, { desc = 'Toggle screenkey statusline component' })
 
 require('screenkey').setup {
   -- your configuration comes here
