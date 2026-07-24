@@ -7,27 +7,16 @@ vim.pack.add {
   { src = gh 'nvim-neotest/neotest-python' },
   { src = gh 'nsidorenco/neotest-vstest' },
   { src = gh 'nvim-neotest/neotest' },
-  {
-    src = gh 'mrcjkb/rustaceanvim',
-    -- To avoid being surprised by breaking changes,
-    -- I recommend you set a version range
-    version = vim.version.range '^9',
-  },
   { src = gh 'arthur944/neotest-bun' },
   { src = gh 'marilari88/neotest-vitest' },
 }
 
 require('neotest').setup {
   adapters = {
-    -- Must stay first: rustaceanvim's root() does an unguarded vim.env.HOME
-    -- call with no fast-event protection. If another adapter's root() runs
-    -- an async op first and leaves the coroutine resumed from a raw libuv
-    -- callback, rustaceanvim's call inherits that context and throws E5560.
-    require 'rustaceanvim.neotest',
     require 'neotest-python',
     require 'neotest-vstest',
-    require 'neotest-bun',
     require 'neotest-vitest',
+    require 'neotest-bun',
   },
 }
 

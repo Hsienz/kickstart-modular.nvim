@@ -7,26 +7,27 @@ require('conform').setup {
   format_on_save = function(bufnr)
     -- You can specify filetypes to autoformat on save here:
     local enabled_filetypes = {
-          lua = true,
-          python = true,
-          fish = true,
-          sh = true,
-          cs = true,
-          json = true,
-          svelte = true,
-          javascript = true,
-          typescript = true,
-          javascriptreact = true,
-          typescriptreact = true,
-          css = true,
-          html = true,
-          yaml = true,
-          markdown = true,
-          ['markdown.mdx'] = true,
-          yarn = true,
-          xml = true,
-          c = true,
-          cpp = true,
+      lua = true,
+      python = true,
+      fish = true,
+      sh = true,
+      cs = true,
+      json = true,
+      svelte = true,
+      javascript = true,
+      typescript = true,
+      javascriptreact = true,
+      typescriptreact = true,
+      css = true,
+      html = true,
+      yaml = true,
+      markdown = true,
+      ['markdown.mdx'] = true,
+      yarn = true,
+      xml = true,
+      c = true,
+      cpp = true,
+      go = true,
     }
     if enabled_filetypes[vim.bo[bufnr].filetype] then
       return { timeout_ms = 1500 }
@@ -39,6 +40,7 @@ require('conform').setup {
   },
   -- You can also specify external formatters in here.
   formatters_by_ft = {
+    go = { 'goimports', 'gofumpt' },
     -- rust = { 'rustfmt' },
     -- Conform can also run multiple formatters sequentially
     -- python = { "isort", "black" },
