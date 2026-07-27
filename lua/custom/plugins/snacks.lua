@@ -7,7 +7,7 @@ require('snacks').setup {
   -- your configuration comes here
   -- or leave it empty to use the default settings
   -- refer to the configuration section below
-  bigfile = { enabled = true },
+  bigfile = { enabled = true, size = 8 * 1024 * 1024 },
   dashboard = {
     enabled = true,
     preset = {
@@ -38,6 +38,31 @@ require('snacks').setup {
         { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
         { icon = ' ', key = 's', desc = 'Restore Session', action = function() require('persistence').load() end },
         { icon = ' ', key = 'u', desc = 'Vim Pack Update', action = ':lua vim.pack.update()' },
+        {
+          icon = ' ',
+          key = 'U',
+          desc = 'Vim Pack Clean',
+          action = function()
+            local active_plugins = {}
+            local unused_plugins = {}
+
+            for _, plugin in ipairs(vim.pack.get()) do
+              active_plugins[plugin.spec.name] = plugin.active
+            end
+
+            for _, plugin in ipairs(vim.pack.get()) do
+              if not active_plugins[plugin.spec.name] then table.insert(unused_plugins, plugin.spec.name) end
+            end
+
+            if #unused_plugins == 0 then
+              print 'No unused plugins.'
+              return
+            end
+
+            local choice = vim.fn.confirm('Remove unused plugins?', '&Yes\n&No', 2)
+            if choice == 1 then vim.pack.del(unused_plugins) end
+          end,
+        },
         { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
       },
     },

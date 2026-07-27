@@ -28,6 +28,7 @@ require('conform').setup {
       c = true,
       cpp = true,
       go = true,
+      rust = true,
     }
     if enabled_filetypes[vim.bo[bufnr].filetype] then
       return { timeout_ms = 1500 }
