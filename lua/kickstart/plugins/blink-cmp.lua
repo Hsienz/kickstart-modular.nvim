@@ -151,6 +151,7 @@ cmp.setup {
       list = {
         selection = {
           preselect = false,
+          auto_insert = false,
         },
       },
     },
