@@ -3,31 +3,17 @@ local function gh(repo) return 'https://github.com/' .. repo end
 vim.pack.add {
   { src = gh 'catppuccin/nvim', name = 'catppuccin' },
   { src = gh 'everviolet/nvim', name = 'evergarden' },
-  { src = gh 'ray-x/aurora' },
-  { src = gh 'sainnhe/everforest' },
 }
 
-require('catppuccin').setup {
-  flavour = 'mocha',
-  transparent_background = true,
-  auto_integrations = true,
-  float = {
-    transparent = true,
-    solid = false,
-  },
-}
-
-vim.g.aurora_italic = 1
-vim.g.aurora_transparent = 1
-vim.g.aurora_bold = 1
--- vim.cmd.colorscheme 'aurora'
-
-vim.g.everforest_enable_italic = true
-vim.g.everforest_background = 'hard'
-vim.g.everforest_transparent_background = 2
-vim.g.everforest_float_style = 'blend'
-vim.g.everforest_pmenu_style = 'blend'
--- vim.cmd.colorscheme 'everforest'
+-- require('catppuccin').setup {
+--   flavour = 'mocha',
+--   transparent_background = true,
+--   auto_integrations = true,
+--   float = {
+--     transparent = true,
+--     solid = false,
+--   },
+-- }
 
 require('evergarden').setup {
   theme = {
