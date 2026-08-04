@@ -170,6 +170,9 @@ local servers = {
   gopls = {},
   ruby_lsp = {},
   rubocop = {},
+  powershell_es = {
+    bundle_path = '~/.local/share/nvim/mason/packages/powershell-editor-services',
+  },
   -- pyright = {},
   -- rust_analyzer = {},
   --
