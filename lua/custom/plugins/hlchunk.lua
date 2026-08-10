@@ -5,7 +5,10 @@ vim.pack.add { { src = gh 'shellRaining/hlchunk.nvim' } }
 require('hlchunk').setup {
   chunk = {
     enable = true,
-    -- style = '#00FFFF',
+    style = {
+      { fg = '#00ffff' },
+      { fg = '#c21f30' },
+    },
     chars = {
       horizontal_line = '─',
       vertical_line = '│',
@@ -17,7 +20,10 @@ require('hlchunk').setup {
   -- indent = { enable = true, chars = { '│' } },
   line_num = {
     enable = true,
-    -- style = '#00FFFF'
+    style = {
+      { fg = '#00ffff' },
+      { fg = '#c21f30' },
+    },
   },
   exclude_filetypes = {
     'Trouble',

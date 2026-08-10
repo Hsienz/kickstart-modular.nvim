@@ -38,10 +38,10 @@ require('mini.ai').setup {
     U = ai.gen_spec.function_call { name_pattern = '[%w_]' }, -- without dot in function name
   },
   -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
-  -- mappings = {
-  --   around_next = 'aa',
-  --   inside_next = 'ii',
-  -- },
+  mappings = {
+    around_next = 'aA',
+    inside_next = 'iI',
+  },
   n_lines = 500,
 }
 

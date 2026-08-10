@@ -7,7 +7,7 @@ require('snacks').setup {
   -- your configuration comes here
   -- or leave it empty to use the default settings
   -- refer to the configuration section below
-  bigfile = { enabled = true, size = 8 * 1024 * 1024 },
+  bigfile = { enabled = false, size = 8 * 1024 * 1024 },
   dashboard = {
     enabled = true,
     preset = {

@@ -57,3 +57,14 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- vim: ts=2 sts=2 sw=2 et
+require('nvim-treesitter').setup {
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = '<A-o>',
+      node_incremental = '<A-o>',
+      scope_incremental = '<A-O>',
+      node_decremental = '<A-i>',
+    },
+  },
+}
