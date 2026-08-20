@@ -17,10 +17,11 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 vim.tbl_map(function(type) require('luasnip.loaders.from_' .. type).lazy_load() end, { 'vscode', 'snipmate', 'lua' })
 -- friendly-snippets - enable standardized comments snippets
-require('luasnip').filetype_extend('cs', { 'unity' })
+if vim.fn.glob 'unity.*.csproj' ~= '' then require('luasnip').filetype_extend('cs', { 'unity' }) end
+if vim.fn.glob '*.uproject' ~= '' then require('luasnip').filetype_extend('cpp', { 'unreal' }) end
 
 -- [[ Autocomplete Engine ]]
-vim.pack.add { { src = gh 'saghen/blink.lib' }, { src = gh 'saghen/blink.cmp' } }
+vim.pack.add { { src = gh 'saghen/blink.lib' }, { src = gh 'saghen/blink.cmp' }, { src = gh 'taku25/blink-cmp-unreal' } }
 local cmp = require 'blink.cmp'
 cmp.build():pwait()
 cmp.setup {
@@ -123,9 +124,16 @@ cmp.setup {
     },
   },
 
-  -- sources = {
-  --   default = { 'snippets', 'lsp', 'path', 'buffer' },
-  -- },
+  sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer', 'unreal' },
+    providers = {
+      unreal = {
+        module = 'blink-cmp-unreal',
+        name = 'unreal',
+        score_offset = 15,
+      },
+    },
+  },
 
   snippets = { preset = 'luasnip' },
 
