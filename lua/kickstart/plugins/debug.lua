@@ -14,12 +14,7 @@ vim.pack.add {
   'https://github.com/jay-babu/mason-nvim-dap.nvim',
   'https://github.com/leoluz/nvim-dap-go',
  -- { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.*")  },
-	'https://github.com/Weissle/persistent-breakpoints.nvim',
 	'https://github.com/ownself/nvim-dap-unity'
-}
-
-require("persistent-breakpoints").setup {
-	load_breakpoints_event ={ "BufReadPost"}
 }
 
 vim.api.nvim_create_autocmd("FileType", {

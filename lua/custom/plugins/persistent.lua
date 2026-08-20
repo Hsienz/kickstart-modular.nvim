@@ -1,8 +1,11 @@
 local function gh(repo) return 'https://github.com/' .. repo end
 
-vim.pack.add { { src = gh 'folke/persistence.nvim' } }
+vim.pack.add { { src = gh 'folke/persistence.nvim' }, { src = gh 'Weissle/persistent-breakpoints.nvim' } }
 
 require('persistence').setup()
+require('persistent-breakpoints').setup {
+  load_breakpoints_event = { 'BufReadPost' },
+}
 -- load the session for the current directory
 vim.keymap.set('n', '<leader>qs', function() require('persistence').load() end)
 
