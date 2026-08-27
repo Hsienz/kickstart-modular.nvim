@@ -6,14 +6,14 @@ require('hlchunk').setup {
   chunk = {
     enable = true,
     style = {
-      { fg = '#00ffff' },
-      { fg = '#c21f30' },
+      { fg = '#cba6f7' },
+      { fg = '##f38ba8' },
     },
     chars = {
       horizontal_line = '─',
       vertical_line = '│',
-      left_top = '┌',
-      left_bottom = '└',
+      left_top = '╭',
+      left_bottom = '╰',
       right_arrow = '─',
     },
   },
@@ -21,8 +21,8 @@ require('hlchunk').setup {
   line_num = {
     enable = true,
     style = {
-      { fg = '#00ffff' },
-      { fg = '#c21f30' },
+      { fg = '##cba6f7' },
+      { fg = '##f38ba8' },
     },
   },
   exclude_filetypes = {
