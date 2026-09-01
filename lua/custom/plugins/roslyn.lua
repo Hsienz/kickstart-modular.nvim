@@ -5,5 +5,5 @@ vim.pack.add { { src = gh 'seblyng/roslyn.nvim' } }
 ---@module 'roslyn.config'
 ---@type RoslynNvimConfig
 require('roslyn').setup {
-  filewatching = 'off',
+  filewatching = 'roslyn',
 }
