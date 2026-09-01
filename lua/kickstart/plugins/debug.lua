@@ -13,17 +13,13 @@ vim.pack.add {
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/jay-babu/mason-nvim-dap.nvim',
   'https://github.com/leoluz/nvim-dap-go',
- -- { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.*")  },
+  "https://github.com/mfussenegger/nvim-dap-python",
 	'https://github.com/ownself/nvim-dap-unity'
 }
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "python",
     callback = function(args)
-        vim.pack.add({
-            "https://github.com/mfussenegger/nvim-dap-python",
-        })
-
         require("dap-python").setup("uv")
 
         local opts = { buffer = args.buf }
@@ -105,12 +101,6 @@ dapui.setup {
     },
   },
 }
-
--- dapui.setup {
--- 	windows = {
--- 		position = "right"
--- 	}
--- }
 
 -- Change breakpoint icons
 vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
