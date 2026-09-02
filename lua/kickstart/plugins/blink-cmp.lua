@@ -17,7 +17,7 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 vim.tbl_map(function(type) require('luasnip.loaders.from_' .. type).lazy_load() end, { 'vscode', 'snipmate', 'lua' })
 -- friendly-snippets - enable standardized comments snippets
-if vim.fn.glob 'unity.*.csproj' ~= '' then require('luasnip').filetype_extend('cs', { 'unity' }) end
+if vim.fn.glob 'Unity.*.csproj' ~= '' then require('luasnip').filetype_extend('cs', { 'unity' }) end
 if vim.fn.glob '*.uproject' ~= '' then require('luasnip').filetype_extend('cpp', { 'unreal' }) end
 
 -- [[ Autocomplete Engine ]]
