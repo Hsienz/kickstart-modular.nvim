@@ -5,15 +5,15 @@ vim.pack.add {
   { src = gh 'everviolet/nvim', name = 'evergarden' },
 }
 
--- require('catppuccin').setup {
---   flavour = 'mocha',
---   transparent_background = true,
---   auto_integrations = true,
---   float = {
---     transparent = true,
---     solid = false,
---   },
--- }
+require('catppuccin').setup {
+  -- flavour = 'mocha',
+  transparent_background = true,
+  auto_integrations = true,
+  float = {
+    transparent = true,
+    solid = false,
+  },
+}
 
 require('evergarden').setup {
   theme = {
@@ -32,6 +32,7 @@ require('evergarden').setup {
     },
   },
 }
+
 vim.cmd.colorscheme 'evergarden'
 -- You can add your own plugins here or in other files in this directory!
 --  I promise not to create any merge conflicts in this directory :)

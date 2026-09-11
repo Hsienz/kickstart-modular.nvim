@@ -174,6 +174,7 @@ local servers = {
     bundle_path = '~/.local/share/nvim/mason/packages/powershell-editor-services',
   },
   slangd = {},
+  bashls = {},
   -- pyright = {},
   -- rust_analyzer = {},
   --
