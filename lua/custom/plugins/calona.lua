@@ -27,4 +27,4 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
-vim.keymap.set('n', '<leader>fm', '<cmd>Canola --float<CR>', { desc = 'Explorer (Canola)' })
+vim.keymap.set('n', '<leader>E', '<cmd>Canola --float<CR>', { desc = 'Explorer (Canola)' })

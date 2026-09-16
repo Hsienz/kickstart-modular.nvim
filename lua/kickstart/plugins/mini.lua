@@ -94,6 +94,10 @@ notify.setup {
     enable = false,
   },
 }
+
+files = require 'mini.files'
+files.setup()
 vim.keymap.set('n', '<leader>n', function() notify.show_history() end)
+vim.keymap.set('n', '<leader>fm', function() files.open() end)
 
 -- vim: ts=2 sts=2 sw=2 et
