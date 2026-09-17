@@ -9,6 +9,9 @@ vim.pack.add {
 vim.g.canola_git = {
   format = 'symbol',
 }
+
+vim.g.canola_trash = {}
+
 vim.g.canola = {
   hidden = {
     enabled = true,

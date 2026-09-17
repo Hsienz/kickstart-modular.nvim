@@ -3,6 +3,7 @@ local function gh(repo) return 'https://github.com/' .. repo end
 vim.pack.add {
   { src = gh 'catppuccin/nvim', name = 'catppuccin' },
   { src = gh 'everviolet/nvim', name = 'evergarden' },
+  { src = gh 'loctvl842/monokai-pro.nvim' },
 }
 
 require('catppuccin').setup {
@@ -31,6 +32,10 @@ require('evergarden').setup {
       color = 'none',
     },
   },
+}
+
+require('monokai-pro').setup {
+  transparent_background = true,
 }
 
 vim.cmd.colorscheme 'evergarden'

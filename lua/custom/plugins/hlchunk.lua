@@ -7,7 +7,7 @@ require('hlchunk').setup {
     enable = true,
     style = {
       { fg = '#cba6f7' },
-      { fg = '##f38ba8' },
+      { fg = '#f38ba8' },
     },
     chars = {
       horizontal_line = '─',
@@ -21,8 +21,8 @@ require('hlchunk').setup {
   line_num = {
     enable = true,
     style = {
-      { fg = '##cba6f7' },
-      { fg = '##f38ba8' },
+      { fg = '#cba6f7' },
+      { fg = '#f38ba8' },
     },
   },
   exclude_filetypes = {
