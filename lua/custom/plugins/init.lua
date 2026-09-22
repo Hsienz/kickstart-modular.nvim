@@ -1,3 +1,44 @@
+local function gh(repo) return 'https://github.com/' .. repo end
+
+vim.pack.add {
+  { src = gh 'catppuccin/nvim', name = 'catppuccin' },
+  { src = gh 'everviolet/nvim', name = 'evergarden' },
+  { src = gh 'loctvl842/monokai-pro.nvim' },
+}
+
+require('catppuccin').setup {
+  -- flavour = 'mocha',
+  transparent_background = true,
+  auto_integrations = true,
+  float = {
+    transparent = true,
+    solid = false,
+  },
+}
+
+require('evergarden').setup {
+  theme = {
+    variant = 'winter', -- 'winter'|'fall'|'spring'|'summer'
+    accent = 'green',
+  },
+  editor = {
+    transparent_background = true,
+    sign = { color = 'none' },
+    float = {
+      color = 'none',
+      solid_border = false,
+    },
+    completion = {
+      color = 'none',
+    },
+  },
+}
+
+require('monokai-pro').setup {
+  transparent_background = true,
+}
+
+vim.cmd.colorscheme 'evergarden'
 -- You can add your own plugins here or in other files in this directory!
 --  I promise not to create any merge conflicts in this directory :)
 --

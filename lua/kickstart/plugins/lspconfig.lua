@@ -27,6 +27,7 @@ local function gh(repo) return 'https://github.com/' .. repo end
 -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
 -- Useful status updates for LSP.
+vim.pack.add { gh 'b0o/SchemaStore.nvim' }
 vim.pack.add { gh 'j-hui/fidget.nvim' }
 require('fidget').setup {}
 
@@ -49,15 +50,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Rename the variable under your cursor.
     --  Most Language Servers support renaming across files, etc.
-    map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+    -- map('cr', vim.lsp.buf.rename, '[R]e[n]ame')
 
     -- Execute a code action, usually your cursor needs to be on top of an error
     -- or a suggestion from your LSP for this to activate.
-    map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+    map('<leader>ca', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
     -- WARN: This is not Goto Definition, this is Goto Declaration.
     --  For example, in C this would take you to the header.
-    map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    -- map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.
@@ -103,8 +104,78 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --  See `:help lsp-config` for information about keys and how to configure
 ---@type table<string, vim.lsp.Config>
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
+  ty = {},
+  ruff = {},
+  biome = {},
+  svelte = {},
+  vtsls = {},
+  tailwindcss = {},
+  jsonls = {
+    schemas = require('schemastore').json.schemas(),
+    validate = { enable = true },
+  },
+  yamlls = {
+    settings = {
+      yaml = {
+        schemaStore = {
+          -- You must disable built-in schemaStore support if you want to use
+          -- this plugin and its advanced options like `ignore`.
+          enable = false,
+          -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+          url = '',
+        },
+        schemas = require('schemastore').yaml.schemas(),
+      },
+    },
+  },
+  dockerls = {},
+  docker_compose_language_service = {},
+  marksman = {},
+  glsl_analyzer = {},
+  prettier = {},
+  zls = {},
+  roslyn = {
+    settings = {
+      ['csharp|completion'] = {
+        dotnet_show_completion_items_from_unimported_namespaces = true,
+        dotnet_show_name_completion_suggestions = true,
+      },
+      ['csharp|inlay_hints'] = {
+        csharp_enable_inlay_hints_for_implicit_object_creation = true,
+        csharp_enable_inlay_hints_for_implicit_variable_types = true,
+        csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+        csharp_enable_inlay_hints_for_types = true,
+        dotnet_enable_inlay_hints_for_indexer_parameters = true,
+        dotnet_enable_inlay_hints_for_literal_parameters = true,
+        dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+        dotnet_enable_inlay_hints_for_other_parameters = true,
+        dotnet_enable_inlay_hints_for_parameters = true,
+        dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+        dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+        dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+      },
+      ['csharp|code_lens'] = {
+        dotnet_enable_references_code_lens = true,
+      },
+      ['csharp|formatting'] = {
+        dotnet_organize_imports_on_format = true,
+      },
+    },
+  },
+  clangd = {
+    keys = {
+      { '<leader>ch', '<cmd>LspClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
+    },
+  },
+  gopls = {},
+  ruby_lsp = {},
+  rubocop = {},
+  powershell_es = {
+    bundle_path = '~/.local/share/nvim/mason/packages/powershell-editor-services',
+  },
+  slangd = {},
+  bashls = {},
+  mesonlsp = {},
   -- pyright = {},
   -- tsc = {},
   --
@@ -157,7 +228,12 @@ vim.pack.add {
 }
 
 -- Automatically install LSPs and related tools to stdpath for Neovim
-require('mason').setup {}
+require('mason').setup {
+  registries = {
+    'github:mason-org/mason-registry',
+    'github:Crashdummyy/mason-registry',
+  },
+}
 
 -- Translates between nvim-lspconfig server names and mason.nvim package names (e.g. lua_ls <-> lua-language-server)
 require('mason-lspconfig').setup {
@@ -182,5 +258,9 @@ for name, server in pairs(servers) do
   vim.lsp.config(name, server)
   vim.lsp.enable(name)
 end
+
+vim.lsp.enable 'ysls'
+vim.lsp.codelens.enable(true)
+vim.lsp.inlay_hint.enable(true)
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -17,11 +17,30 @@ end
 --  - va)  - [V]isually select [A]round [)]paren
 --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
 --  - ci'  - [C]hange [I]nside [']quote
+local ai = require 'mini.ai'
+local gen_ai_spec = require('mini.extra').gen_ai_spec
 require('mini.ai').setup {
+  custom_textobjects = {
+    o = ai.gen_spec.treesitter { -- code block
+      a = { '@block.outer', '@conditional.outer', '@loop.outer' },
+      i = { '@block.inner', '@conditional.inner', '@loop.inner' },
+    },
+    f = ai.gen_spec.treesitter { a = '@function.outer', i = '@function.inner' }, -- function
+    c = ai.gen_spec.treesitter { a = '@class.outer', i = '@class.inner' }, -- class
+    t = { '<([%p%w]-)%f[^<%w][^<>]->.-</%1>', '^<.->().*()</[^/]->$' }, -- tags
+    d = { '%f[%d]%d+' }, -- digits
+    e = { -- Word with case
+      { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },
+      '^().*()$',
+    },
+    g = gen_ai_spec.buffer(), -- buffer
+    u = ai.gen_spec.function_call(), -- u for "Usage"
+    U = ai.gen_spec.function_call { name_pattern = '[%w_]' }, -- without dot in function name
+  },
   -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
   mappings = {
-    around_next = 'aa',
-    inside_next = 'ii',
+    around_next = 'aA',
+    inside_next = 'iI',
   },
   n_lines = 500,
 }
@@ -31,22 +50,54 @@ require('mini.ai').setup {
 -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
 -- - sd'   - [S]urround [D]elete [']quotes
 -- - sr)'  - [S]urround [R]eplace [)] [']
-require('mini.surround').setup()
+require('mini.surround').setup {
+  mappings = {
+    add = 'gsa', -- Add surrounding in Normal and Visual modes
+    delete = 'gsd', -- Delete surrounding
+    find = 'gsf', -- Find surrounding (to the right)
+    find_left = 'gsF', -- Find surrounding (to the left)
+    highlight = 'gsh', -- Highlight surrounding
+    replace = 'gsr', -- Replace surrounding
+    suffix_last = 'l', -- Suffix to search with "prev" method
+    suffix_next = 'n', -- Suffix to search with "next" method
+  },
+}
 
--- Simple and easy statusline.
---  You could remove this setup call if you don't like it,
---  and try some other statusline plugin
-local statusline = require 'mini.statusline'
--- Set `use_icons` to true if you have a Nerd Font
-statusline.setup { use_icons = vim.g.have_nerd_font }
-
--- You can configure sections in the statusline by overriding their
--- default behavior. For example, here we set the section for
--- cursor location to LINE:COLUMN
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_location = function() return '%2l:%-2v' end
+-- -- Simple and easy statusline.
+-- --  You could remove this setup call if you don't like it,
+-- --  and try some other statusline plugin
+-- local statusline = require 'mini.statusline'
+-- -- Set `use_icons` to true if you have a Nerd Font
+-- statusline.setup { use_icons = vim.g.have_nerd_font }
+--
+-- -- You can configure sections in the statusline by overriding their
+-- -- default behavior. For example, here we set the section for
+-- -- cursor location to LINE:COLUMN
+-- ---@diagnostic disable-next-line: duplicate-set-field
+-- statusline.section_location = function() return '%2l:%-2v' end
 
 -- ... and there is more!
 --  Check out: https://github.com/nvim-mini/mini.nvim
+require('mini.move').setup()
+require('mini.comment').setup {
+  options = {
+    custom_commentstring = function() return require('ts_context_commentstring').calculate_commentstring() or vim.bo.commentstring end,
+  },
+  mappings = {
+    textobject = 'gb',
+  },
+}
+require('mini.input').setup()
+local notify = require 'mini.notify'
+notify.setup {
+  lsp_progress = {
+    enable = false,
+  },
+}
+
+files = require 'mini.files'
+files.setup()
+vim.keymap.set('n', '<leader>n', function() notify.show_history() end)
+vim.keymap.set('n', '<leader>fm', function() files.open() end)
 
 -- vim: ts=2 sts=2 sw=2 et
