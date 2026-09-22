@@ -1,9 +1,10 @@
 local function gh(repo) return 'https://github.com/' .. repo end
+local function forge(repo) return 'https://forge.barrettruth.com/' .. repo end
 
 vim.pack.add {
-  { src = gh 'barrettruth/canola.nvim', version = 'canola' },
+  { src = forge 'barrettruth/canola.nvim', version = 'canola' },
   { src = gh 'nvim-tree/nvim-web-devicons' },
-  { src = gh 'barrettruth/canola-collection' },
+  { src = forge 'barrettruth/canola-collection' },
 }
 
 vim.g.canola_git = {

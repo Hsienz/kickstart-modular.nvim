@@ -175,6 +175,7 @@ local servers = {
   },
   slangd = {},
   bashls = {},
+  mesonlsp = {},
   -- pyright = {},
   -- rust_analyzer = {},
   --
