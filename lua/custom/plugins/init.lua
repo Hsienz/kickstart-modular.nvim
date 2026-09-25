@@ -3,7 +3,7 @@ local function gh(repo) return 'https://github.com/' .. repo end
 vim.pack.add {
   { src = gh 'catppuccin/nvim', name = 'catppuccin' },
   { src = gh 'everviolet/nvim', name = 'evergarden' },
-  { src = gh 'loctvl842/monokai-pro.nvim' },
+  { src = gh 'sainnhe/everforest' },
 }
 
 require('catppuccin').setup {
@@ -34,11 +34,12 @@ require('evergarden').setup {
   },
 }
 
-require('monokai-pro').setup {
-  transparent_background = true,
-}
+vim.g.everforest_transparent_background = 2
+vim.g.everforest_float_style = 'blend'
+vim.g.everforest_pmenu_style = 'blend'
+vim.g.everforest_better_performance = 1
 
-vim.cmd.colorscheme 'evergarden'
+vim.cmd.colorscheme 'everforest'
 -- You can add your own plugins here or in other files in this directory!
 --  I promise not to create any merge conflicts in this directory :)
 --
