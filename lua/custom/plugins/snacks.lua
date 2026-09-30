@@ -72,7 +72,7 @@ require('snacks').setup {
     },
   },
   explorer = { enabled = false },
-  image = { enabled = true },
+  image = { enabled = false },
   indent = { enabled = false },
   input = { enabled = false },
   picker = { enabled = true },

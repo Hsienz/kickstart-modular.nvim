@@ -1,6 +1,6 @@
 local function gh(repo) return 'https://github.com/' .. repo end
 
-vim.pack.add { { src = gh 'mistweaverco/kulala.nvim' } }
+vim.pack.add { { src = gh 'dont-be-evil-company/kulala.nvim' } }
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'http', 'rest' },

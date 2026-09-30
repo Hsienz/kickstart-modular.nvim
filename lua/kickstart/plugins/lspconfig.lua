@@ -130,7 +130,7 @@ local servers = {
   },
   dockerls = {},
   docker_compose_language_service = {},
-  marksman = {},
+  rumdl = {},
   glsl_analyzer = {},
   prettier = {},
   zls = {},
