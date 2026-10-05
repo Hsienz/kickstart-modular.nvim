@@ -8,8 +8,9 @@
 
 vim.pack.add {
   'https://github.com/mfussenegger/nvim-dap',
-  'https://github.com/rcarriga/nvim-dap-ui',
-  'https://github.com/nvim-neotest/nvim-nio',
+  -- 'https://github.com/rcarriga/nvim-dap-ui',
+  -- 'https://github.com/nvim-neotest/nvim-nio',
+  'https://github.com/igorlfs/nvim-dap-view',
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/jay-babu/mason-nvim-dap.nvim',
   'https://github.com/leoluz/nvim-dap-go',
@@ -58,8 +59,8 @@ vim.keymap.set('n', '<leader>dX', function() require('persistent-breakpoints.api
 vim.keymap.set('n', '<leader>dL', function() require('persistent-breakpoints.api').set_log_point() end, { desc = 'Debug: Set Log Point' })
 
 local dap = require 'dap'
-local dapui = require 'dapui'
--- local dapui = require 'dap-view'
+-- local dapui = require 'dapui'
+local dapui = require 'dap-view'
 
 require('mason-nvim-dap').setup {
   -- Makes a best effort to setup the various debuggers with
@@ -78,29 +79,31 @@ require('mason-nvim-dap').setup {
   },
 }
 
--- Dap UI setup
--- For more information, see |:help nvim-dap-ui|
----@diagnostic disable-next-line: missing-fields
-dapui.setup {
-  -- Set icons to characters that are more likely to work in every terminal.
-  --    Feel free to remove or use ones that you like more! :)
-  --    Don't feel like these are good choices.
-  icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-  ---@diagnostic disable-next-line: missing-fields
-  controls = {
-    icons = {
-      pause = '⏸',
-      play = '▶',
-      step_into = '⏎',
-      step_over = '⏭',
-      step_out = '⏮',
-      step_back = 'b',
-      run_last = '▶▶',
-      terminate = '⏹',
-      disconnect = '⏏',
-    },
-  },
-}
+require("dap-view").setup()
+
+-- -- Dap UI setup
+-- -- For more information, see |:help nvim-dap-ui|
+-- ---@diagnostic disable-next-line: missing-fields
+-- dapui.setup {
+--   -- Set icons to characters that are more likely to work in every terminal.
+--   --    Feel free to remove or use ones that you like more! :)
+--   --    Don't feel like these are good choices.
+--   icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+--   ---@diagnostic disable-next-line: missing-fields
+--   controls = {
+--     icons = {
+--       pause = '⏸',
+--       play = '▶',
+--       step_into = '⏎',
+--       step_over = '⏭',
+--       step_out = '⏮',
+--       step_back = 'b',
+--       run_last = '▶▶',
+--       terminate = '⏹',
+--       disconnect = '⏏',
+--     },
+--   },
+-- }
 
 -- Change breakpoint icons
 vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
@@ -153,7 +156,6 @@ dap.configurations.cpp = {
   },
 }
 dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
 dap.configurations.zig = dap.configurations.cpp
 
 dap.configurations.cs = {
