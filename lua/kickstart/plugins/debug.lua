@@ -58,6 +58,15 @@ vim.keymap.set('n', '<leader>dw', function() require('dap.ui.widgets').hover() e
 vim.keymap.set('n', '<leader>dX', function() require('persistent-breakpoints.api').clear_all_breakpoints() end, { desc = 'Debug: Clear All Breakpoints' })
 vim.keymap.set('n', '<leader>dL', function() require('persistent-breakpoints.api').set_log_point() end, { desc = 'Debug: Set Log Point' })
 
+-- using function key
+vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = 'Debug: Continue' })
+vim.keymap.set('n', '<F9>', function() require('persistent-breakpoints.api').toggle_breakpoint() end, { desc = 'Debug: Toggle Breakpoint' })
+vim.keymap.set('n', '<F10>', function() require('dap').step_over() end, { desc = 'Debug: Step Over' })
+vim.keymap.set('n', '<F11>', function() require('dap').step_into() end, { desc = 'Debug: Step Into' })
+vim.keymap.set('n', '<S-F11>', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
+vim.keymap.set('n', '<C-F5>', function() require('dap').run_to_cursor() end, { desc = 'Debug: Run to Cursor' })
+vim.keymap.set('n', '<S-F5>', function() require('dap').terminate() end, { desc = 'Debug: Terminate' })
+
 local dap = require 'dap'
 -- local dapui = require 'dapui'
 local dapui = require 'dap-view'
@@ -79,7 +88,7 @@ require('mason-nvim-dap').setup {
   },
 }
 
-require("dap-view").setup()
+require("dap-view").setup{}
 
 -- -- Dap UI setup
 -- -- For more information, see |:help nvim-dap-ui|
