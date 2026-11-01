@@ -4,6 +4,7 @@ vim.pack.add {
   { src = gh 'catppuccin/nvim', name = 'catppuccin' },
   { src = gh 'everviolet/nvim', name = 'evergarden' },
   { src = gh 'sainnhe/everforest' },
+  { src = gh 'bytebeast/kissaten.nvim' },
 }
 
 require('catppuccin').setup {
@@ -34,12 +35,26 @@ require('evergarden').setup {
   },
 }
 
+require('kissaten').setup {
+  transparent = true,
+  accent = 'pink',
+  styles = {
+    sidebars = 'transparent',
+    floats = 'transparent',
+  },
+
+  diagnostics = {
+    virtial_text = 'plain',
+  },
+  inlay_hints = 'plain',
+}
+
 vim.g.everforest_transparent_background = 2
 vim.g.everforest_float_style = 'blend'
 vim.g.everforest_pmenu_style = 'blend'
 vim.g.everforest_better_performance = 1
 
-vim.cmd.colorscheme 'everforest'
+vim.cmd.colorscheme 'kissaten-midnight'
 -- You can add your own plugins here or in other files in this directory!
 --  I promise not to create any merge conflicts in this directory :)
 --
